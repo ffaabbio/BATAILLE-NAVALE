@@ -12,9 +12,10 @@ typedef enum BoatOrientation {
 } BoatOrientation;
 
 typedef struct Boat {
-    Position position;
-    int orientation;
+    Position *position;
+    int lenght;
     int hit;
+    char *name;
     int sunk;
 } Boat;
 
