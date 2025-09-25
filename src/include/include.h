@@ -6,13 +6,8 @@ typedef struct Positions {
     int y;
 } Positions;
 
-typedef enum BoatOrientation {
-    BOAT_HORIZONTAL,
-    BOAT_VERTICAL
-} BoatOrientation;
-
 typedef struct Boat {
-    Positions *position;
+    Positions *positions;
     int lenght;
     int hit;
     char *name;

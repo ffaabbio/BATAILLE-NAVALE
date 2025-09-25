@@ -1,60 +1,92 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "game.h"
 
-int newGame(int rows,int cols,char ** map1, char ** map2) {
+
+//boats est un tableau de tableau de positions, chaque tableau de positions doit finir par une position qui vaut -1 -1
+void initBoats(Map * map,Position ** boats) {
+    //Toujous 5 bateaux au debut du jeu
+     for (int i = 0; i < 5; i++) {
+         int len = 0;
+         for (int j = 0; boats[i][j].x != -1; j++) {
+             map->boats[i].positions[j] = boats[i][j];
+             len++;
+         }
+         map->boats[i].length = len;
+     }
+}
+int newGame(Map *map1, Map *map2) {
     int winner = 0;
     int lap = 0;
     while (winner<1) {
-        if (lap%2 == 0 || lap == 0) {
-
+        Position pos;
+        int a = 0,b = 0;
+        int * succesfull = &a;
+        int * touch = &b;
+        char ** errorMessages;
+        strcpy(errorMessages[0]," ");
+        strcpy(errorMessages[1]," ");
+        if (lap%2 != 0 || lap != 0) {
+            printf("Joueur 1, veuillez rentrer la position de votre attaque :(x, y)\n");
+            scanf("(%d, %d)",&pos.x,&pos.y);
+            map2  = attack(map2,pos,succesfull,touch,errorMessages);
+            printResultAttack(successfull,touch,errorMessages);
+            if (*successfull) {
+                lap++;
+            }
+        }
+        else if (lap%2 == 0 || lap == 0) {
+            printf("Joueur 2, veuillez rentrer la position de votre attaque :(x, y)\n");
+            scanf("(%d, %d)",&pos.x,&pos.y);
+            map1.board  = attack(map1,pos,succesfull,touch,errorMessages);
+            printResultAttack(successfull,touch,errorMessages);
+            if (*successfull) {
+                lap++;
+            }
         }
     }
+
+    //!!!! PENSER A FREE !!!!
 }
-int attackAvailable(int width,int height,char ** board,Position attack,char ** errorMessages) {
-    if ( attack.x >= width || attack.x <= 0 || attack.y <0 || attack.y >= height ) {
+int attackAvailable(Map *map,Position attack,char ** errorMessages) {
+    if ( attack.x >= rows || attack.x <= 0 || attack.y <0 || attack.y >= cols ) {
         errorMessages[0] = "Vous essayez d'attaquer en dehors du plateau !\0";
         //Vous essayez d'attaquer en dehors du plateau ! 46 + \0
         return 0;
     }
-    if (board[height][width] == 'O' || board[height][width] == 'X') {
-        errorMessages[0] = "Vous avez déjà attaqué cet endroit !\0";
+    if (map->board[map->rows][map->cols] == 'O' || map->board[map->rows][map->cols] == 'X') {
+        errorMessages[1] = "Vous avez déjà attaqué cet endroit !\0";
         //Vous avez déjà attaqué cet endroit !
         return 0;
     }
     return 1;
 }
 
-char ** attack(int width, int height, char ** board,Position attack,int * succesfull, int * touch) {
-    char ** errorMessages = malloc(sizeof(char *) * 2);
-    for (int i = 0; i < 2; i++) {
-        errorMessages[i] = malloc(sizeof(char ) * 47);
-    }
-
-
-    if (!attackAvailable(width,height,board,attack,errorMessages)) {
+Map * attack(Map *map,Position attack,int * succesfull, int * touch, char ** errorMessages) {
+    if (!attackAvailable(map,attack,errorMessages)) {
         *succesfull = 0;
-        return errorMessages;
+        return map;
     }
     *succesfull = 1;
 
-    if (board[attack.y][attack.x] == 'B') {
+    if (map->board[attack.y][attack.x] == 'A' || map->board[attack.y][attack.x] =='B' || map->board[attack.y][attack.x] == 'C' || map->board[attack.y][attack.x] == 'D') {
         *touch = 1;
-        board[attack.y][attack.x] = 'X';
+        map->board[attack.y][attack.x] = 'X';
     }
-    if (board[attack.y][attack.x] == '.') {
+    if (map->board[attack.y][attack.x] == '.') {
         *touch = 0;
-        board[attack.y][attack.x] = 'O';
+        map->board[attack.y][attack.x] = 'O';
     }
+    return map;
 }
 
-void printResultAttack(int width,int height,char ** board,Position attack,int * successfull,int *touch,char ** errorMessages) {
+void printResultAttack(int * successfull,int *touch,char ** errorMessages) {
     if (!successfull) {
         for (int i = 0; i < 2; i++) {
             printf("%s\n",errorMessages[i]);
-            free(errorMessages[i]);
+            errorMessages[i] = " ";
         }
-        free(errorMessages);
 
     }
     if (*successfull) {

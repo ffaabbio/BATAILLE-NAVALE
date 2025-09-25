@@ -29,11 +29,21 @@ int main(void) {
         printf("Please enter numbers between 1 and 99.\n");
     }
     printf("Veuillez rentrer la taille des plateaux\n");
-    char ** board1 = createMap(rows,cols);
+
+    Map *map1 = malloc(sizeof(Map));
+    Map *map2 = malloc(sizeof(Map));
+    map1->board = createMap(rows,cols);
+    map1->rows = rows;
+    map1->cols = cols;
+    map2->board = createMap(rows,cols);
+    map2->rows = rows;
+    map2->cols = cols;
+
     char ** board2 = createMap(rows,cols);
-    Boat *boat1 = malloc(sizeof(Boat) * 3);
-    Boat *boat2 = malloc(sizeof(Boat) * 3);
-    get_position_of_cheap(board1, board2, rows, cols, boat1, boat2);
+    map1->boats = malloc(sizeof(Boat) * 3);
+    map2->boats = malloc(sizeof(Boat) * 3);
+    get_position_of_cheap(map1->board, map2->board, rows, cols, map1->boats, map2->boats);
+
 
     return 0;
 }
