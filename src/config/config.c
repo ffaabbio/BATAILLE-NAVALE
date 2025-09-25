@@ -31,27 +31,27 @@ int check_if_number(char *a, char *b) {
     return 1;
 }
 
-void add_boat_to_map(char **navy1, char **navy2, int posx1, int posx2, int posy1, int posy2, int x, int y, int a)
+void add_boat_to_map(char **navy1, char **navy2, int posx1, int posx2, int posy1, int posy2, int x, int y, char a)
 {
     if (posx1 == posx2) {
         if (posy1 > posy2) {
             for (int i = posy1; i >= posy2; i--) {
-                navy1[posx1][i] = 'a';
+                navy1[posx1][i] = a;
             }
         } else {
             for (int i = posy1; i <= posy2; i++) {
-                navy1[posx1][i] = 'a';
+                navy1[posx1][i] = a;
             }
         }
     }
     if (posy1 == posy2) {
         if (posx1 > posx2) {
             for (int i = posx1; i >= posx2; i--) {
-                navy1[i][posy1] = 'a';
+                navy1[i][posy1] = a;
             }
         } else {
             for (int i = posx1; i <= posx2; i++) {
-                navy1[i][posy1] = 'a';
+                navy1[i][posy1] = a;
             }
         }
     }
@@ -99,7 +99,7 @@ void get_position_of_cheap(char **navy1, char **navy2, int x, int y)
     int posy1;
     int posx2;
     int posy2;
-    int name_of_boat = 0;
+    char name_of_boat = 'a';
 
     for (int i = 0; i < 3; i++) {
         printf("Entrez la premiere position du %s bateau sous la form (ligne, colon) : ", déco[i]);
@@ -154,8 +154,9 @@ void get_position_of_cheap(char **navy1, char **navy2, int x, int y)
                 printf("Entrer une position : ");
             }
         }
-        add_boat_to_map(navy1, navy2, posx1, posx2, posy1, posy2, x, y, i);
+        add_boat_to_map(navy1, navy2, posx1, posx2, posy1, posy2, x, y, name_of_boat);
         position_finded = 0;
+        name_of_boat++;
     }
 }
 
