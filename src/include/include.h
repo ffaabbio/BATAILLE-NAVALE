@@ -1,10 +1,10 @@
 #ifndef INCLUDE_H
     #define INCLUDE_H
 
-typedef struct Position {
+typedef struct Positions {
     int x;
     int y;
-} Position;
+} Positions;
 
 typedef enum BoatOrientation {
     BOAT_HORIZONTAL,
@@ -12,7 +12,7 @@ typedef enum BoatOrientation {
 } BoatOrientation;
 
 typedef struct Boat {
-    Position *position;
+    Positions *position;
     int lenght;
     int hit;
     char *name;

@@ -8,13 +8,6 @@ typedef struct Position {
     int y;
 } Position;
 
-typedef struct Boat {
-    Position begPosition;
-    Position endPosition;
-    int length;
-    int hit;
-    int sunk;
-} Boat;
 
 int attackAvailable();
 char ** attack();

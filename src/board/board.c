@@ -37,9 +37,3 @@ char** createMap(int rows,int cols) {
     }
     return map;
 }
-int main(void) {
-
-    createMap();
-
-    return 0;
-}
