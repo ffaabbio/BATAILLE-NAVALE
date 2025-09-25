@@ -13,7 +13,6 @@ typedef enum BoatOrientation {
 
 typedef struct Boat {
     Position position;
-    int length;
     int orientation;
     int hit;
     int sunk;
