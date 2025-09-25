@@ -19,6 +19,6 @@ typedef struct Boat {
     int sunk;
 } Boat;
 
-void create(int x, int y);
+void get_position_of_cheap(char **navy1, char **navy2, int x, int y, Boat *boat1, Boat *boat2);
 
 #endif
