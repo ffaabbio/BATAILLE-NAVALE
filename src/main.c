@@ -31,6 +31,9 @@ int main(void) {
     printf("Veuillez rentrer la taille des plateaux\n");
     char ** board1 = createMap(rows,cols);
     char ** board2 = createMap(rows,cols);
+    Boat *boat1 = malloc(sizeof(Boat) * 3);
+    Boat *boat2 = malloc(sizeof(Boat) * 3);
+    get_position_of_cheap(board1, board2, rows, cols, boat1, boat2);
 
     return 0;
 }
