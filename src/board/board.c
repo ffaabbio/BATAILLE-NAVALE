@@ -35,5 +35,6 @@ char** createMap(int rows,int cols) {
             printf("%d  ",map[k][j]);
         }
     }
+    printf("\n");
     return map;
 }

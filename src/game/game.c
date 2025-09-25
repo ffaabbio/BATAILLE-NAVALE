@@ -4,9 +4,11 @@
 
 int newGame(int rows,int cols,char ** map1, char ** map2) {
     int winner = 0;
-    int lap;
+    int lap = 0;
     while (winner<1) {
+        if (lap%2 == 0 || lap == 0) {
 
+        }
     }
 }
 int attackAvailable(int width,int height,char ** board,Position attack,char ** errorMessages) {
