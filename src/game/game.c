@@ -14,6 +14,20 @@ void initBoats(Map * map,Position ** boats) {
              len++;
          }
          map->boats[i].length = len;
+         map->boats[i].hit = 0;
+         map->boats[i].sunk = 0;
+         if (len == 5) {
+             strcpy(map->boats[i].name,"Carrier");
+         }
+         if (len == 4) {
+             strcpy(map->boats[i].name,"Battleship");
+         }
+         if (len == 3) {
+             strcpy(map->boats[i].name,"Cruser");
+         }
+         if (len == 2) {
+             strcpy(map->boats[i].name,"Destroyer");
+         }
      }
 }
 int newGame(Map *map1, Map *map2) {
