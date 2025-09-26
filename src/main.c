@@ -8,16 +8,16 @@
 int main(void) {
     int rows,cols;
     while (1) {
-        printf("Enter the number of rows (1-20): ");
+        printf("Entrez le nombre de lignes (1-20): ");
         if (scanf("%d", &rows) != 1) {
-            printf("Invalid input! Please enter a number.\n");
+            printf("Entrée invalide !  Veuillez entrer un nombre entier.\n");
             while (getchar() != '\n');
             continue;
         }
 
-        printf("Enter the number of cols (1-20): ");
+        printf("Entrez le nombre de colonnes (1-20): ");
         if (scanf("%d", &cols) != 1) {
-            printf("Invalid input! Please enter a number.\n");
+            printf("Entrée invalide !  Veuillez entrer un nombre entier.\n");
             while (getchar() != '\n');
             continue;
         }
@@ -26,13 +26,21 @@ int main(void) {
             break;
         }
 
-        printf("Please enter numbers between 1 and 20.\n");
+        printf("Veuillez entrer un nombre entre 1 et 20.\n");
     }
+    FILE * f = fopen("config/config.txt","w");
+    fprintf(f,"%d %d",rows,cols);
+    fclose(f);
+
+    f = fopen("config/config.txt","r");
+
+    int height,width;
+    fscanf(f,"%d %d",&height,&width);
     printf("Veuillez rentrer la taille des plateaux\n");
-    char ** board1 = createMap(rows,cols);
+    char ** board1 = createMap(height,width);
     display_map(board1, rows, cols);
     printf("\n");
-    char ** board2 = createMap(rows,cols);
+    char ** board2 = createMap(height,width);
     display_map(board2, rows, cols);
     Boat *boat1 = malloc(sizeof(Boat) * 3);
     Boat *boat2 = malloc(sizeof(Boat) * 3);
