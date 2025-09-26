@@ -3,14 +3,22 @@
 #include "board.h"
 
 char** createMap(int rows,int cols) {
-
-
     char **map= malloc(rows*sizeof(char*));
     for(int i=0;i<rows;i++) {
-        map[i]= calloc(cols,sizeof(char));
+        map[i]= malloc(cols * sizeof(char));
     }
 
-    char letter = 'A';
+    for(int i=0;i<rows;i++) {
+        for(int j=0;j<cols;j++) {
+          map[i][j]='.';
+        }
+    }
+
+    return map;
+}
+
+void display_map(char** map,int rows,int cols) {
+  char letter = 'A';
     int count = 1;
 
     printf("%4c ",letter);
@@ -32,10 +40,8 @@ char** createMap(int rows,int cols) {
         count++;
         letter++;
         for (int k=0;k<rows;k++) {
-            printf("%d  ",map[k][j]);
+            printf("%c  ",map[k][j]);
         }
     }
     printf("\n");
-    printf("\n");
-    return map;
 }

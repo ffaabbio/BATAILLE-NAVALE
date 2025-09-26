@@ -3,14 +3,15 @@
 #include <stdio.h>
 #include <string.h>
 
+#include "../board/board.h"
 #include "../include/include.h"
 
 
-void display_map(char **map, int x, int y)
+void display_map2(char **map, int x, int y)
 {
     printf("   ");
     for (int i = 0; i < y; i++) {
-        printf("%d", i + 1);
+        printf("%2d ", i + 1);
     }
     printf("\n");
     for (int i = 0; i < x; i++) {
@@ -89,6 +90,7 @@ void add_boat_to_map(char **navy1, int posx1, int posx2, int posy1, int posy2, i
         }
     }
     display_map(navy1, x, y);
+
 }
 
 int check_if_already_boat(char **navy1, int posx1, int posx2, int posy1, int posy2) {
@@ -140,11 +142,13 @@ void get_position_of_cheap(char **navy1, char **navy2, int x, int y, Boat *boat1
             navy2[i][j] = '.';
         }
     }
+    // tour de boucle pour créer les bateaux des deux joueurs
     for (int navy = 0; navy < 2; navy++) {
         if (navy == 0)
             printf("PLAYER 1 >>\n");
         else
             printf("PLAYER 2 >>\n");
+        // créer les 3 bateaux par joueurs
         for (int i = 0; i < 3; i++) {
             printf("Entrez la premiere positions du %s bateau sous la form (ligne, colon) : ", déco[i]);
             while (!position_finded) {
@@ -207,3 +211,4 @@ void get_position_of_cheap(char **navy1, char **navy2, int x, int y, Boat *boat1
         }
     }
 }
+

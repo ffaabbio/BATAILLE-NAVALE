@@ -8,14 +8,14 @@
 int main(void) {
     int rows,cols;
     while (1) {
-        printf("Enter the number of rows (1-99): ");
+        printf("Enter the number of rows (1-20): ");
         if (scanf("%d", &rows) != 1) {
             printf("Invalid input! Please enter a number.\n");
             while (getchar() != '\n');
             continue;
         }
 
-        printf("Enter the number of cols (1-99): ");
+        printf("Enter the number of cols (1-20): ");
         if (scanf("%d", &cols) != 1) {
             printf("Invalid input! Please enter a number.\n");
             while (getchar() != '\n');
@@ -26,7 +26,7 @@ int main(void) {
             break;
         }
 
-        printf("Please enter numbers between 1 and 99.\n");
+        printf("Please enter numbers between 1 and 20.\n");
     }
     printf("Veuillez rentrer la taille des plateaux\n");
 
@@ -35,9 +35,11 @@ int main(void) {
     map1->board = createMap(rows,cols);
     map1->rows = rows;
     map1->cols = cols;
+    display_map(map1->board, rows, cols);
     map2->board = createMap(rows,cols);
     map2->rows = rows;
     map2->cols = cols;
+    display_map(map2->board, rows, cols);
 
     char ** board2 = createMap(rows,cols);
     map1->boats = malloc(sizeof(Boat *) * 3);
