@@ -28,11 +28,11 @@ int main(void) {
 
         printf("Veuillez entrer un nombre entre 1 et 20.\n");
     }
-    FILE * f = fopen("config/config.txt","w");
+    FILE * f = fopen("config.txt","w");
     fprintf(f,"%d %d",rows,cols);
     fclose(f);
 
-    f = fopen("config/config.txt","r");
+    f = fopen("config.txt","r");
 
     int height,width;
     fscanf(f,"%d %d",&height,&width);
