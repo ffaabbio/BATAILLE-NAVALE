@@ -1,19 +1,18 @@
 #ifndef INCLUDE_H
 #define INCLUDE_H
 
-typedef struct Positions {
+typedef struct {
     int x;
     int y;
-} Positions;
-
+} Position;
 typedef struct Boat {
-    Positions **positions;
-    int lenght;
+    Position **positions;
+    int length;
     int hit;
     char *name;
     int sunk;
 } Boat;
 
-void get_position_of_cheap(char **navy1, char **navy2, int x, int y, Boat *boat1, Boat *boat2);
+Position *** placeBoats();
 
 #endif

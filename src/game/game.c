@@ -16,7 +16,7 @@ void initBoats(Map * map,Position *** boatsPositions) {
              map->boats[i]->positions[j]->y = boatsPositions[i][j]->y;
              len++;
          }
-         map->boats[i]->lenght = len;
+         map->boats[i]->length = len;
          map->boats[i]->hit = 0;
          map->boats[i]->sunk = 0;
          if (len == 5) {

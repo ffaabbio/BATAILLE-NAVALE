@@ -35,16 +35,25 @@ int main(void) {
     map1->board = createMap(rows,cols);
     map1->rows = rows;
     map1->cols = cols;
-    display_map(map1->board, rows, cols);
     map2->board = createMap(rows,cols);
     map2->rows = rows;
     map2->cols = cols;
-    display_map(map2->board, rows, cols);
+    map1->boats = malloc(sizeof(Boat *) * 5);
+    map2->boats = malloc(sizeof(Boat *) * 5);
 
-    char ** board2 = createMap(rows,cols);
-    map1->boats = malloc(sizeof(Boat *) * 3);
-    map2->boats = malloc(sizeof(Boat *) * 3);
-    get_position_of_cheap(map1->board, map2->board, rows, cols, map1->boats[0], map2->boats[0]);
+    Position *** boatsPos1 = malloc(sizeof(Position **) * 5);
+    for (int i = 0; i <6;i++) {
+        boatsPos1[i] = malloc(sizeof(Position *) * 6);
+    }
+    Position *** boatsPos2 = malloc(sizeof(Position **) * 5);
+    for (int i = 0; i <6;i++) {
+        boatsPos2[i] = malloc(sizeof(Position *) * 6);
+    }
+    initBoats(map1,placeBoats(map1,boatsPos1));
+    initBoats(map2,placeBoats(map2,boatsPos2));
+
+    printf("Bateaux créés avec succès !");
+
 
 
     return 0;

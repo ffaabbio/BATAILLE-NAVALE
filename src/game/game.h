@@ -7,11 +7,6 @@
 #include "../include/include.h"
 
 typedef struct {
-    int x;
-    int y;
-} Position;
-
-typedef struct {
     int rows;
     int cols;
     char ** board;
@@ -25,6 +20,7 @@ Map * attack();
 void printResultAttack();
 int newGame();
 void endGame();
+void initBoats();
 
 
 

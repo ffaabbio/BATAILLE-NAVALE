@@ -5,9 +5,56 @@
 
 #include "../board/board.h"
 #include "../include/include.h"
+#include "../game/game.h"
 
+Position *** placeBoats(Map * map,Position *** boatsPos) {
+    int cpt = 0;
+    while (cpt!= 5) {
+        Position begPos,endPos ;
+        int isAbort = 0;
 
-void display_map2(char **map, int x, int y)
+        printf("Veuillez entrer la position du debut de votre bateau(x, y): ");
+        scanf("%d, %d",&begPos.x,&begPos.y);
+        printf("Veuillez entrer la position de la fin de votre bateau(x, y): ");
+        scanf("%d, %d",&endPos.x,&endPos.y);
+
+        if (begPos.x >= map->cols || begPos.x < 0 || begPos.y >= map->rows || begPos.y < 0 || endPos.x >= map->cols || endPos.x < 0 || endPos.y >= map->rows || endPos.y < 0) {
+            printf("Vous essayez de placer votre bateau en dehors de votre plateau !\n");
+            isAbort = 1;
+        }
+        if (begPos.x == endPos.x && begPos.y == endPos.y) {
+            printf("Vous ne pouvez pas placer votre bateau en diagonale !");
+            isAbort = 1;
+        }
+        for (int i = begPos.y;i <=endPos.y;i++) {
+            for (int j = begPos.x;j<=endPos.x;j++) {
+                if (map->board[i][j] != '.') {
+                    printf("Vous essayez de superposer vos bateaux !\n");
+                    isAbort = 1;
+                    break;
+                }
+            }
+        }
+        if (!isAbort) {
+            if (begPos.x != endPos.x) {
+                for (int i = 0;i < endPos.x - begPos.x; i++) {
+                    boatsPos[cpt][i]->x = begPos.x + i;
+                    boatsPos[cpt][i]->y = begPos.y;
+                }
+            }
+            if (begPos.y != endPos.y) {
+                for (int i = 0;i < endPos.y - begPos.y; i++) {
+                    boatsPos[cpt][i]->y = begPos.y + i;
+                    boatsPos[cpt][i]->x = begPos.x;
+                }
+            }
+            cpt++;
+        }
+    }
+    return boatsPos;
+}
+
+/*void display_map2(char **map, int x, int y)
 {
     printf("   ");
     for (int i = 0; i < y; i++) {
@@ -34,7 +81,7 @@ int check_if_number(char *a, char *b) {
     return 1;
 }
 
-void add_boat_to_map(char **navy1, int posx1, int posx2, int posy1, int posy2, int x, int y, char a, Boat *boat1, int z)
+void add_boat_to_map(char **navy1, int posx1, int posx2, int posy1, int posy2, int x, int y, char a, Boat **boat1, int z)
 {
     int size_of_boat = 0;
     int index = 0;
@@ -54,19 +101,23 @@ void add_boat_to_map(char **navy1, int posx1, int posx2, int posy1, int posy2, i
             size_of_boat = posx2 - posx1;
         }
     }
-    boat1[z].positions = malloc(sizeof(Positions) * size_of_boat + 1);
+    boat1[z]->positions = malloc(sizeof(Positions*) * size_of_boat + 1);
+    for (int k = 0; k < size_of_boat + 1; k++) {
+        boat1[z]->positions[k] = malloc(sizeof(Positions));
+    }
+    boat1[z]->length = size_of_boat + 1;
     if (posx1 == posx2) {
         if (posy1 > posy2) {
             for (int i = posy1; i >= posy2; i--) {
-                boat1[z].positions[index]->x = posx1;
-                boat1[z].positions[index]->y = i;
+                boat1[z]->positions[index]->x = posx1;
+                boat1[z]->positions[index]->y = i;
                 index++;
                 navy1[posx1][i] = a;
             }
         } else {
             for (int i = posy1; i <= posy2; i++) {
-                boat1[z].positions[index]->x = posx1;
-                boat1[z].positions[index]->y = i;
+                boat1[z]->positions[index]->x = posx1;
+                boat1[z]->positions[index]->y = i;
                 index++;
                 navy1[posx1][i] = a;
             }
@@ -75,15 +126,15 @@ void add_boat_to_map(char **navy1, int posx1, int posx2, int posy1, int posy2, i
     if (posy1 == posy2) {
         if (posx1 > posx2) {
             for (int i = posx1; i >= posx2; i--) {
-                boat1[z].positions[index]->x = i;
-                boat1[z].positions[index]->y = posy1;
+                boat1[z]->positions[index]->x = i;
+                boat1[z]->positions[index]->y = posy1;
                 index++;
                 navy1[i][posy1] = a;
             }
         } else {
             for (int i = posx1; i <= posx2; i++) {
-                boat1[z].positions[index]->x = i;
-                boat1[z].positions[index]->y = posy1;
+                boat1[z]->positions[index]->x = i;
+                boat1[z]->positions[index]->y = posy1;
                 index++;
                 navy1[i][posy1] = a;
             }
@@ -123,7 +174,7 @@ int check_if_already_boat(char **navy1, int posx1, int posx2, int posy1, int pos
     return 1;
 }
 
-void get_position_of_cheap(char **navy1, char **navy2, int x, int y, Boat *boat1, Boat *boat2)
+void get_position_of_cheap(char **navy1, char **navy2, int x, int y, Boat **boat1, Boat **boat2)
 {
     int position_finded = 0;
     char new_position[20];
@@ -187,6 +238,7 @@ void get_position_of_cheap(char **navy1, char **navy2, int x, int y, Boat *boat1
                 if (a != NULL && b != NULL && check_if_number(a, b) == 1) {
                     posx2 = atoi(a) - 1;
                     posy2 = atoi(b) - 1;
+                    printf("Une pomme ");
                     if ((posx2 >= 0 && posx2 < x) && (posy2 >= 0 && posy2 < y))
                         if ((posx1 == posx2 || posy1 == posy2)) {
                             if (navy == 0 && check_if_already_boat(navy1, posx1, posx2, posy1, posy2) == 1 || navy == 1 && check_if_already_boat(navy2, posx1, posx2, posy1, posy2) == 1) {
@@ -210,5 +262,5 @@ void get_position_of_cheap(char **navy1, char **navy2, int x, int y, Boat *boat1
             name_of_boat++;
         }
     }
-}
+}*/
 
