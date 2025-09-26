@@ -131,6 +131,7 @@ void get_position_of_cheap(char **navy1, char **navy2, int x, int y, Boat *boat1
     char *b;
     char déco[3][20] = {"Premier", "Deuxiéme", "Troisiéme"};
     int posx1;
+
     int posy1;
     int posx2;
     int posy2;

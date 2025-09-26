@@ -4,5 +4,6 @@
 
 char** createMap(int rows,int cols);
 void display_map(char** map,int rows,int cols);
+char **test(char **map ,int rows,int cols);
 
 #endif

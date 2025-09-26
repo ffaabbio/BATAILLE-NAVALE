@@ -45,3 +45,59 @@ void display_map(char** map,int rows,int cols) {
     }
     printf("\n");
 }
+
+
+char **test(char **map ,int rows,int cols) {
+
+    int x = 0, y = 0;
+
+
+	printf("Position X à attaquer : \n");
+    scanf("%d",&x);
+    printf("Position Y à attaquer : \n");
+    scanf("%d",&y);
+
+	if(x<rows && y<cols) {
+    if (map[x][y] == '.'){
+      system("cls");
+      printf("Coule ! \n");
+      map[x][y]='X';
+    } else if (map[x][y] != '.' && map[x][y] != 'X') {
+      system("cls");
+      printf("Touche ! \n");
+      map[x][y]=!'x';
+    }
+
+
+    display_map(map,rows,cols);
+	}
+
+
+
+
+	printf("Position X à attaquer : \n");
+    scanf("%d",&x);
+    printf("Position Y à attaquer : \n");
+    scanf("%d",&y);
+
+	if(x<rows && y<cols) {
+    if (map[x][y] == '.'){
+      system("cls");
+      printf("Coule ! \n");
+      map[x][y]='X';
+    } else if (map[x][y] != '.' && map[x][y] != 'X') {
+      system("cls");
+      printf("Touche ! \n");
+      map[x][y]=!'x';
+    }
+
+
+    display_map(map,rows,cols);
+	}
+
+
+return map;
+}
+
+
+
