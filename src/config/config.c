@@ -53,19 +53,19 @@ void add_boat_to_map(char **navy1, int posx1, int posx2, int posy1, int posy2, i
             size_of_boat = posx2 - posx1;
         }
     }
-    boat1[z].position = malloc(sizeof(Positions) * size_of_boat + 1);
+    boat1[z].positions = malloc(sizeof(Positions) * size_of_boat + 1);
     if (posx1 == posx2) {
         if (posy1 > posy2) {
             for (int i = posy1; i >= posy2; i--) {
-                boat1[z].position[index].x = posx1;
-                boat1[z].position[index].y = i;
+                boat1[z].positions[index]->x = posx1;
+                boat1[z].positions[index]->y = i;
                 index++;
                 navy1[posx1][i] = a;
             }
         } else {
             for (int i = posy1; i <= posy2; i++) {
-                boat1[z].position[index].x = posx1;
-                boat1[z].position[index].y = i;
+                boat1[z].positions[index]->x = posx1;
+                boat1[z].positions[index]->y = i;
                 index++;
                 navy1[posx1][i] = a;
             }
@@ -74,15 +74,15 @@ void add_boat_to_map(char **navy1, int posx1, int posx2, int posy1, int posy2, i
     if (posy1 == posy2) {
         if (posx1 > posx2) {
             for (int i = posx1; i >= posx2; i--) {
-                boat1[z].position[index].x = i;
-                boat1[z].position[index].y = posy1;
+                boat1[z].positions[index]->x = i;
+                boat1[z].positions[index]->y = posy1;
                 index++;
                 navy1[i][posy1] = a;
             }
         } else {
             for (int i = posx1; i <= posx2; i++) {
-                boat1[z].position[index].x = i;
-                boat1[z].position[index].y = posy1;
+                boat1[z].positions[index]->x = i;
+                boat1[z].positions[index]->y = posy1;
                 index++;
                 navy1[i][posy1] = a;
             }
@@ -146,7 +146,7 @@ void get_position_of_cheap(char **navy1, char **navy2, int x, int y, Boat *boat1
         else
             printf("PLAYER 2 >>\n");
         for (int i = 0; i < 3; i++) {
-            printf("Entrez la premiere position du %s bateau sous la form (ligne, colon) : ", déco[i]);
+            printf("Entrez la premiere positions du %s bateau sous la form (ligne, colon) : ", déco[i]);
             while (!position_finded) {
                 fgets(new_position, sizeof(new_position), stdin);
                 size_t len = strlen(new_position);
@@ -156,7 +156,7 @@ void get_position_of_cheap(char **navy1, char **navy2, int x, int y, Boat *boat1
                 a = strtok(new_position, "(,)    \t\n\0");
                 b = strtok(NULL, "(,)    \t\n\0");
                 if (a == NULL && b == NULL) {
-                    printf("Entrer une position : ");
+                    printf("Entrer une positions : ");
                     continue;
                 }
                 if (check_if_number(a, b) == 1) {
@@ -165,13 +165,13 @@ void get_position_of_cheap(char **navy1, char **navy2, int x, int y, Boat *boat1
                     if ((posx1 >= 0 && posx1 < x) && (posy1 >= 0 && posy1 < y))
                         position_finded = 1;
                     else
-                        printf("Entrer une position dans l'interval : ");
+                        printf("Entrer une positions dans l'interval : ");
                 } else{
-                    printf("Entrer une position : ");
+                    printf("Entrer une positions : ");
                 }
             }
             position_finded = 0;
-            printf("Entrez la deuxiéme position du %s bateau sous la form (ligne, colon) : ", déco[i]);
+            printf("Entrez la deuxiéme positions du %s bateau sous la form (ligne, colon) : ", déco[i]);
             while (!position_finded) {
                 fgets(new_position, sizeof(new_position), stdin);
                 size_t len = strlen(new_position);
@@ -193,9 +193,9 @@ void get_position_of_cheap(char **navy1, char **navy2, int x, int y, Boat *boat1
                         } else
                             printf("Le bateau ne peut pas etre en diagonal : ");
                         else
-                            printf("Entrer unr position dans l'interval : ");
+                            printf("Entrer unr positions dans l'interval : ");
                 } else {
-                    printf("Entrer une position : ");
+                    printf("Entrer une positions : ");
                 }
             }
             if (navy == 0)

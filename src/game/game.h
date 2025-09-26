@@ -1,7 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
+
 #ifndef GAME_H
 #define GAME_H
+
+#include "../include/include.h"
 
 typedef struct {
     int x;
@@ -12,13 +15,13 @@ typedef struct {
     int rows;
     int cols;
     char ** board;
-    Boat * boats;
+    Boat ** boats;
 
 } Map;
 
 
 int attackAvailable();
-char ** attack();
+Map * attack();
 void printResultAttack();
 int newGame();
 void endGame();

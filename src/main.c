@@ -40,9 +40,9 @@ int main(void) {
     map2->cols = cols;
 
     char ** board2 = createMap(rows,cols);
-    map1->boats = malloc(sizeof(Boat) * 3);
-    map2->boats = malloc(sizeof(Boat) * 3);
-    get_position_of_cheap(map1->board, map2->board, rows, cols, map1->boats, map2->boats);
+    map1->boats = malloc(sizeof(Boat *) * 3);
+    map2->boats = malloc(sizeof(Boat *) * 3);
+    get_position_of_cheap(map1->board, map2->board, rows, cols, map1->boats[0], map2->boats[0]);
 
 
     return 0;

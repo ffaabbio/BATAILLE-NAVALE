@@ -2,31 +2,34 @@
 #include <stdlib.h>
 #include <string.h>
 #include "game.h"
+#include "../include/include.h"
 
 
 //boats est un tableau de tableau de positions, chaque tableau de positions doit finir par une position qui vaut -1 -1
-void initBoats(Map * map,Position ** boats) {
+void initBoats(Map * map,Position *** boatsPositions) {
     //Toujous 5 bateaux au debut du jeu
      for (int i = 0; i < 5; i++) {
          int len = 0;
-         for (int j = 0; boats[i][j].x != -1; j++) {
-             map->boats[i].positions[j] = boats[i][j];
+         for (int j = 0; boatsPositions[i][j]->x != -1; j++) {
+             map->boats[i]->positions[j] = malloc(sizeof(Position *));
+             map->boats[i]->positions[j]->x = boatsPositions[i][j]->x;
+             map->boats[i]->positions[j]->y = boatsPositions[i][j]->y;
              len++;
          }
-         map->boats[i].length = len;
-         map->boats[i].hit = 0;
-         map->boats[i].sunk = 0;
+         map->boats[i]->lenght = len;
+         map->boats[i]->hit = 0;
+         map->boats[i]->sunk = 0;
          if (len == 5) {
-             strcpy(map->boats[i].name,"Carrier");
+             strcpy(map->boats[i]->name,"Carrier");
          }
          if (len == 4) {
-             strcpy(map->boats[i].name,"Battleship");
+             strcpy(map->boats[i]->name,"Battleship");
          }
          if (len == 3) {
-             strcpy(map->boats[i].name,"Cruser");
+             strcpy(map->boats[i]->name,"Cruser");
          }
          if (len == 2) {
-             strcpy(map->boats[i].name,"Destroyer");
+             strcpy(map->boats[i]->name,"Destroyer");
          }
      }
 }
@@ -36,7 +39,7 @@ int newGame(Map *map1, Map *map2) {
     while (winner<1) {
         Position pos;
         int a = 0,b = 0;
-        int * succesfull = &a;
+        int * successfull = &a;
         int * touch = &b;
         char ** errorMessages;
         strcpy(errorMessages[0]," ");
@@ -44,7 +47,7 @@ int newGame(Map *map1, Map *map2) {
         if (lap%2 != 0 || lap != 0) {
             printf("Joueur 1, veuillez rentrer la position de votre attaque :(x, y)\n");
             scanf("(%d, %d)",&pos.x,&pos.y);
-            map2  = attack(map2,pos,succesfull,touch,errorMessages);
+            map2  = attack(map2,pos,successfull,touch,errorMessages);
             printResultAttack(successfull,touch,errorMessages);
             if (*successfull) {
                 lap++;
@@ -53,7 +56,7 @@ int newGame(Map *map1, Map *map2) {
         else if (lap%2 == 0 || lap == 0) {
             printf("Joueur 2, veuillez rentrer la position de votre attaque :(x, y)\n");
             scanf("(%d, %d)",&pos.x,&pos.y);
-            map1.board  = attack(map1,pos,succesfull,touch,errorMessages);
+            map1  = attack(map1,pos,successfull,touch,errorMessages);
             printResultAttack(successfull,touch,errorMessages);
             if (*successfull) {
                 lap++;
@@ -64,7 +67,7 @@ int newGame(Map *map1, Map *map2) {
     //!!!! PENSER A FREE !!!!
 }
 int attackAvailable(Map *map,Position attack,char ** errorMessages) {
-    if ( attack.x >= rows || attack.x <= 0 || attack.y <0 || attack.y >= cols ) {
+    if ( attack.x >= map->rows || attack.x <= 0 || attack.y <0 || attack.y >= map->cols ) {
         errorMessages[0] = "Vous essayez d'attaquer en dehors du plateau !\0";
         //Vous essayez d'attaquer en dehors du plateau ! 46 + \0
         return 0;
@@ -77,20 +80,20 @@ int attackAvailable(Map *map,Position attack,char ** errorMessages) {
     return 1;
 }
 
-Map * attack(Map *map,Position attack,int * succesfull, int * touch, char ** errorMessages) {
-    if (!attackAvailable(map,attack,errorMessages)) {
+Map * attack(Map *map,Position  positionAttack,int * succesfull, int * touch, char ** errorMessages) {
+    if (!attackAvailable(map,positionAttack,errorMessages)) {
         *succesfull = 0;
         return map;
     }
     *succesfull = 1;
 
-    if (map->board[attack.y][attack.x] == 'A' || map->board[attack.y][attack.x] =='B' || map->board[attack.y][attack.x] == 'C' || map->board[attack.y][attack.x] == 'D') {
+    if (map->board[positionAttack.y][positionAttack.x] == 'A' || map->board[positionAttack.y][positionAttack.x] =='B' || map->board[positionAttack.y][positionAttack.x] == 'C' || map->board[positionAttack.y][positionAttack.x] == 'D') {
         *touch = 1;
-        map->board[attack.y][attack.x] = 'X';
+        map->board[positionAttack.y][positionAttack.x] = 'X';
     }
-    if (map->board[attack.y][attack.x] == '.') {
+    if (map->board[positionAttack.y][positionAttack.x] == '.') {
         *touch = 0;
-        map->board[attack.y][attack.x] = 'O';
+        map->board[positionAttack.y][positionAttack.x] = 'O';
     }
     return map;
 }

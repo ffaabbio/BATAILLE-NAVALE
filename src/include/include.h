@@ -1,5 +1,5 @@
 #ifndef INCLUDE_H
-    #define INCLUDE_H
+#define INCLUDE_H
 
 typedef struct Positions {
     int x;
@@ -7,7 +7,7 @@ typedef struct Positions {
 } Positions;
 
 typedef struct Boat {
-    Positions *positions;
+    Positions **positions;
     int lenght;
     int hit;
     char *name;
