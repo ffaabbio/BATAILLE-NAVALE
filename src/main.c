@@ -8,25 +8,25 @@
 int main(void) {
     int rows,cols;
     while (1) {
-        printf("Enter the number of rows (1-20): ");
+        printf("Enter the number of rows (5-20): ");
         if (scanf("%d", &rows) != 1) {
             printf("Invalid input! Please enter a number.\n");
             while (getchar() != '\n');
             continue;
         }
 
-        printf("Enter the number of cols (1-20): ");
+        printf("Enter the number of cols (5-20): ");
         if (scanf("%d", &cols) != 1) {
             printf("Invalid input! Please enter a number.\n");
             while (getchar() != '\n');
             continue;
         }
 
-        if (rows >= 1 && rows <= 20 && cols >= 1 && cols <= 20) {
+        if (rows >= 5 && rows <= 20 && cols >= 5 && cols <= 20) {
             break;
         }
 
-        printf("Please enter numbers between 1 and 20.\n");
+        printf("Please enter numbers between 5 and 20.\n");
     }
     printf("Veuillez rentrer la taille des plateaux\n");
     char ** board1 = createMap(rows,cols);
